@@ -1,0 +1,96 @@
+@media only screen and (min-width: 360px) and (max-width: 700px) {
+    .header-container {
+        .wrapper {
+            .logo-container {
+                display: none;
+            }
+
+            .abbr {
+                display: none;
+            }
+
+            .navbar {
+                .user {
+                    &-info {
+                        &__name {
+                            font-size: .7rem;
+                        }
+
+                        &__profile {
+                            font-size: .6rem;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    .body-container {
+        width: 100%;
+        background-color: #CCD1EB;
+
+        .wrapper {
+            .employee-action {
+                justify-content: center;
+
+                &__search {
+                    width: 65%;
+                    position: relative;
+                }
+
+                &__add {
+                    display: none;
+                }
+            }
+
+            .employee {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1000px) {
+    .header-container {
+
+        .wrapper {
+
+            .abbr {
+                font-size: .8rem;
+            }
+
+            .navbar {
+
+                .user {
+
+                    &-info {
+                        &__name {
+                            font-size: .7rem;
+                        }
+
+                        &__profile {
+                            font-size: .6rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .body-container {
+        .wrapper {
+            .employee-action {
+                justify-content: space-between;
+
+                &__search {
+                    width: 65%;
+                }
+            }
+
+            .employee {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    }
+}

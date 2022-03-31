@@ -1,0 +1,46 @@
+.employee-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff;
+    border-radius: 10px;
+
+    &__image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-bottom: 20px;
+
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__info {
+        &_name {
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        &_position {
+            font-size: .65rem;
+            font-weight: 400;
+            color: #C9D2D8;
+        }
+    }
+
+    &__details {
+        margin-top: 20px;
+        border: transparent;
+        background-color: transparent;
+        color: lightskyblue;
+        cursor: pointer;
+    }
+}
