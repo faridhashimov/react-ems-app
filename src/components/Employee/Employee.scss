@@ -24,7 +24,7 @@
 
     &__info {
         &_name {
-            font-size: 1rem;
+            font-size: .8rem;
             font-weight: 400;
             margin-bottom: 10px;
         }
@@ -37,6 +37,8 @@
     }
 
     &__details {
+        font-size: .7rem;
+        font-weight: 400;
         margin-top: 20px;
         border: transparent;
         background-color: transparent;
