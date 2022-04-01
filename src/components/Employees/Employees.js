@@ -1,9 +1,25 @@
 import { FaSearch, FaPlus } from 'react-icons/fa'
 import Employee from '../Employee/Employee'
-import { items } from '../../dummyData'
 import './Employees.scss'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const Employees = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const res = await axios.get('http://localhost:5000/api/employees')
+                setData(res.data)
+                console.log(res.data);
+            } catch(err) {
+                console.log(err);
+            }
+        }
+        getData()
+    }, [])
+
     return (
         <div className="body-container">
             <div className="wrapper">
@@ -20,8 +36,8 @@ const Employees = () => {
                     </div>
                 </div>
                 <div className="employee">
-                    {items.map((item) => (
-                        <Employee key={item.id} {...item} />
+                    {data.map((item) => (
+                        <Employee key={item._id} {...item} />
                     ))}
                 </div>
             </div>

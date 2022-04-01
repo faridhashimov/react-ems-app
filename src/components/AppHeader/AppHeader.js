@@ -9,10 +9,10 @@ const AppHeader = () => {
             <div className="wrapper">
                 <Link style={{textDecoration: 'none'}} to="/">
                     <div className="logo-container">
-                        <h1 className="logo-container__image">PMS</h1>
+                        <h1 className="logo-container__image">EMS</h1>
                     </div>
                 </Link>
-                <h1 className="abbr">Performance Managment System</h1>
+                <h1 className="abbr">Employee Managment System</h1>
 
                 <div className="navbar">
                     <div className="icon-container">
