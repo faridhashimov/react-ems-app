@@ -1,14 +1,19 @@
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import AppHeader from '../AppHeader/AppHeader'
 import Employees from '../Employees/Employees'
 import './App.scss'
 import '../../responsive.scss'
+import Employee from '../../pages/Employee/Employee'
 
 function App() {
     return (
-        <div className="App">
+        <Router>
             <AppHeader />
-            <Employees />
-        </div>
+            <Routes>
+                <Route exact path="/" element={<Employees />}/>
+                <Route path="/employee/:id" element={<Employee />}/>
+            </Routes>
+        </Router>
     )
 }
 
