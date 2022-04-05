@@ -66,7 +66,7 @@ const Registration = () => {
                 JSON.stringify({ user, pwd }),
                 {
                     headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true,
+                    // withCredentials: true,
                 }
             )
             console.log(response.data)
@@ -74,6 +74,9 @@ const Registration = () => {
             console.log(JSON.stringify(response))
             setSuccess(true)
             // clear input fields
+            setUser('')
+            setPwd('')
+            setMatchPwd('')
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server response')
@@ -123,6 +126,7 @@ const Registration = () => {
                             type="text"
                             id="username"
                             required
+                            value={user}
                             onChange={(e) => setUser(e.target.value)}
                             ref={userRef}
                             autoComplete="off"
@@ -162,6 +166,7 @@ const Registration = () => {
                             type="password"
                             id="password"
                             onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
                             required
                             aria-invalid={validPwd ? 'false' : 'true'}
                             aria-describedby="pwdnote"
@@ -208,6 +213,7 @@ const Registration = () => {
                             type="password"
                             id="confirm_pwd"
                             onChange={(e) => setMatchPwd(e.target.value)}
+                            value={matchPwd}
                             required
                             aria-invalid={validMatch ? 'false' : 'true'}
                             aria-describedby="confirmnote"
