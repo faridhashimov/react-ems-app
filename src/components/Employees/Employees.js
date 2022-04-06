@@ -1,8 +1,9 @@
 import { FaSearch, FaPlus } from 'react-icons/fa'
 import Employee from '../Employee/Employee'
-import './Employees.scss'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+
+import './Employees.scss'
 
 const Employees = () => {
     const [data, setData] = useState([]);

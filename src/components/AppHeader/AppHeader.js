@@ -1,13 +1,14 @@
 import { AiOutlineBell, AiOutlineLogout } from 'react-icons/ai'
 import { FiRefreshCcw } from 'react-icons/fi'
-import './AppHeader.scss'
 import { Link } from 'react-router-dom'
+
+import './AppHeader.scss'
 
 const AppHeader = () => {
     return (
         <div className="header-container">
             <div className="wrapper">
-                <Link style={{textDecoration: 'none'}} to="/">
+                <Link style={{ textDecoration: 'none' }} to="/">
                     <div className="logo-container">
                         <h1 className="logo-container__image">EMS</h1>
                     </div>

@@ -1,25 +1,25 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import AppHeader from '../AppHeader/AppHeader'
-import Employees from '../Employees/Employees'
 import './App.scss'
-import '../../responsive.scss'
-import Employee from '../../pages/Employee/Employee'
 import Registration from '../../pages/Registration/Registration'
 import Login from '../../pages/Login/Login'
+import { Routes, Route } from 'react-router-dom'
+import Layout from '../Layout'
+import Home from '../../pages/Home/Home'
+import Employee from '../../pages/Employee/Employee'
 
 function App() {
     return (
-        <Router>
-            <div className="App">
-                {/* <AppHeader />
-                <Routes>
-                    <Route exact path="/" element={<Employees />} />
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                {/* Public Routes */}
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Registration />} />
+
+                {/* Protected Routes */}
+                <Route path="/" element={<Home />}>
                     <Route path="/employee/:id" element={<Employee />} />
-                </Routes> */}
-                {/* <Registration /> */}
-                <Login />
-            </div>
-        </Router>
+                </Route>
+            </Route>
+        </Routes>
     )
 }
 
