@@ -60,6 +60,7 @@ const Registration = () => {
             setErrMsg('Invalid Entry')
             return
         }
+        
         try {
             const response = await axios.post(
                 REGISTER_URL,
