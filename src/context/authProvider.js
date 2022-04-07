@@ -1,9 +1,14 @@
 import { createContext, useState } from 'react'
+import usePersistState from './usePersistState'
 
 const AuthContext = createContext({})
 
 export const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({})
+    const [auth, setAuth] = usePersistState('auth', {
+        user: '',
+        pwd: '',
+        accessToken: '',
+    })
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>

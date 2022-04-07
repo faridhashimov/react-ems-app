@@ -13,6 +13,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 0px 20px;
 
         .logo-container {
             background-color: rgb(236, 233, 233);
@@ -75,6 +76,8 @@
 
                 &:last-child {
                     color: red;
+                    margin-right: 0px;
+
                 }
             }
 

@@ -3,11 +3,13 @@ import AuthContext from '../../context/authProvider'
 import axios from '../../api/axios'
 
 import './Login.scss'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 const LOGIN_URL = '/login'
 
 const Login = () => {
     const { setAuth } = useContext(AuthContext)
+    let navigate = useNavigate()
     const userRef = useRef()
     const errReff = useRef()
 
@@ -21,13 +23,13 @@ const Login = () => {
     }, [])
 
     useEffect(() => {
-        console.log(user, pwd);
+        console.log(user, pwd)
         setErrMsg('')
     }, [user, pwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-       
+
         try {
             const response = await axios.post(
                 LOGIN_URL,
@@ -45,7 +47,7 @@ const Login = () => {
             setAuth({ user, pwd, accessToken })
             setUser('')
             setPwd('')
-            setSuccess(true)
+            navigate('/home', { replace: true })
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response')
@@ -63,55 +65,45 @@ const Login = () => {
     }
 
     return (
-        <>
-            {success ? (
-                <section>
-                    <h1>You are logged in</h1>
-                    <br />
-                    <p>
-                        <a href="#">Got to Home</a>
-                    </p>
-                </section>
-            ) : (
-                <section>
-                    <p
-                        ref={errReff}
-                        className={errMsg ? 'errmsg' : 'offscreen'}
-                        aria-live="assertive"
-                    >
-                        {errMsg}
-                    </p>
-                    <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="username">Username:</label>
-                        <input
-                            type="text"
-                            id="username"
-                            ref={userRef}
-                            autoComplete="off"
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
-                            required
-                        />
-                        <label htmlFor="password">Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
-                            required
-                        />
-                        <button>Sign In</button>
-                    </form>
-                    <p className="signin">
-                        Need an Account <br />
-                        <span className="line">
-                            <a href="#">Sing Up</a>
-                        </span>
-                    </p>
-                </section>
-            )}
-        </>
+        <div className='log-main'>
+            <div className='log'>
+                <p
+                    ref={errReff}
+                    className={errMsg ? 'errmsg' : 'offscreen'}
+                    aria-live="assertive"
+                >
+                    {errMsg}
+                </p>
+                <h1>Sign In</h1>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        ref={userRef}
+                        autoComplete="off"
+                        onChange={(e) => setUser(e.target.value)}
+                        value={user}
+                        required
+                    />
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        onChange={(e) => setPwd(e.target.value)}
+                        value={pwd}
+                        required
+                    />
+                    <button>Sign In</button>
+                </form>
+                <p className="signin">
+                    Need an Account <br />
+                    <NavLink to={'/'}>
+                        <span className="line">Sing Up</span>
+                    </NavLink>
+                </p>
+            </div>
+        </div>
     )
 }
 
