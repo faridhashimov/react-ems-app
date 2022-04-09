@@ -3,16 +3,17 @@ import { AiOutlineBell, AiOutlineLogout } from 'react-icons/ai'
 import { FiRefreshCcw } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthContext from '../../context/authProvider'
-import Login from '../../pages/Login/Login'
+import LoginPage from '../../pages/LoginPage/LoginPage'
 
 import './AppHeader.scss'
 
 const AppHeader = () => {
-    const { setAuth } = useContext(AuthContext)
+    const { auth, setAuth } = useContext(AuthContext)
+    const { user } = auth
     let navigate = useNavigate()
     const logout = () => {
         setAuth({ user: '', pwd: '', accessToken: '' })
-        navigate(<Login />, { replace: true })
+        navigate(<LoginPage />, { replace: true })
     }
 
     return (
@@ -41,7 +42,7 @@ const AppHeader = () => {
                                 />
                             </div>
                             <div className="user-info">
-                                <h1 className="user-info__name">Marry Jane</h1>
+                                <h1 className="user-info__name">{user}</h1>
                                 <a
                                     href="google.ru"
                                     className="user-info__profile"
@@ -51,7 +52,7 @@ const AppHeader = () => {
                             </div>
                         </div>
                         <div className="icon-container">
-                            <FiRefreshCcw />{' '}
+                            <FiRefreshCcw />
                         </div>
                         <div onClick={logout} className="icon-container">
                             <AiOutlineLogout />

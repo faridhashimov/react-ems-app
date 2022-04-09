@@ -3,13 +3,13 @@ import { FaCheck, FaTimes, FaInfoCircle } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../../api/axios'
 
-import './Registration.scss'
+import './RegistrationPage.scss'
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
 const REGISTER_URL = '/register'
 
-const Registration = () => {
+const RegistrationPage = () => {
     const userRef = useRef()
     const errRef = useRef()
 
@@ -26,7 +26,6 @@ const Registration = () => {
     const [matchFocus, setMatchFocus] = useState(false)
 
     const [errMsg, setErrMsg] = useState('')
-    const [success, setSuccess] = useState(false)
 
     let navigate = useNavigate()
 
@@ -241,4 +240,4 @@ const Registration = () => {
     )
 }
 
-export default Registration
+export default RegistrationPage

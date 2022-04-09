@@ -53,16 +53,17 @@
                     position: absolute;
                     top: 7px;
                     right: 5px;
-                    height: 10px;
-                    width: 10px;
+                    height: 12px;
+                    width: 12px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    text-align: center;
                     border-radius: 50%;
                     background-color: rgb(192, 178, 115);
                     color: #fff;
                     position: absolute;
-                    font-size: .355rem;
+                    font-size: .45rem;
                 }
 
                 &:not(:nth-child(1)) {
@@ -70,7 +71,7 @@
                 }
 
                 &:first-child {
-                    font-size: 1.3rem;
+                    font-size: 1.5rem;
                     fill: red;
                 }
 

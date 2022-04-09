@@ -1,9 +1,9 @@
 import './App.scss'
-import Registration from '../../pages/Registration/Registration'
-import Login from '../../pages/Login/Login'
+import RegistrationPage from '../../pages/RegistrationPage/RegistrationPage'
+import LoginPage from '../../pages/LoginPage/LoginPage'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import Home from '../../pages/Home/Home'
-import Employee from '../../pages/Employee/Employee'
+import HomePage from '../../pages/HomePage/HomePage'
+import EmployeePage from '../../pages/EmployeePage/EmployeePage'
 import { useContext } from 'react'
 import AuthContext from '../../context/authProvider'
 
@@ -19,7 +19,7 @@ function App() {
                     auth.user ? (
                         <Navigate to="/home" replace={true} />
                     ) : (
-                        <Registration />
+                        <RegistrationPage />
                     )
                 }
             />
@@ -29,7 +29,7 @@ function App() {
                     auth.user ? (
                         <Navigate to="/home" replace={true} />
                     ) : (
-                        <Login />
+                        <LoginPage />
                     )
                 }
             />
@@ -37,13 +37,13 @@ function App() {
                 path="home"
                 element={
                     auth.user ? (
-                        <Home />
+                        <HomePage />
                     ) : (
                         <Navigate to="/login" replace={true} />
                     )
                 }
             />
-            <Route path="employee/:id" element={<Employee />} />
+            <Route path="employee/:id" element={<EmployeePage />} />
         </Routes>
     )
 }

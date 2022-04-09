@@ -2,12 +2,12 @@ import { useState, useRef, useEffect, useContext } from 'react'
 import AuthContext from '../../context/authProvider'
 import axios from '../../api/axios'
 
-import './Login.scss'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import './LoginPage.scss'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const LOGIN_URL = '/login'
 
-const Login = () => {
+const LoginPage = () => {
     const { setAuth } = useContext(AuthContext)
     let navigate = useNavigate()
     const userRef = useRef()
@@ -16,7 +16,6 @@ const Login = () => {
     const [user, setUser] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
-    const [success, setSuccess] = useState(false)
 
     useEffect(() => {
         userRef.current.focus()
@@ -60,8 +59,6 @@ const Login = () => {
             }
             errReff.current.focus()
         }
-
-        // setSuccess(true)
     }
 
     return (
@@ -107,4 +104,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default LoginPage

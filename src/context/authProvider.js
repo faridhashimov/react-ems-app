@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext } from 'react'
 import usePersistState from './usePersistState'
 
 const AuthContext = createContext({})

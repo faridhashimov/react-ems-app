@@ -1,25 +1,36 @@
 import { FaSearch, FaPlus } from 'react-icons/fa'
-import Employee from '../Employee/Employee'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import Employee from '../Employee/Employee'
+import ErrorMsg from '../ErrorMsg/ErrorMsg'
+import useAxios from '../../hooks/useAxios'
 
 import './Employees.scss'
+import Spinner from '../Spinner/Spinner'
 
 const Employees = () => {
-    const [data, setData] = useState([]);
+    const [employees, setEmployees] = useState(null)
+
+    const { data, error, isLoading } = useAxios(
+        'http://localhost:5000/api/employees'
+    )
 
     useEffect(() => {
-        const getData = async () => {
-            try {
-                const res = await axios.get('http://localhost:5000/api/employees')
-                setData(res.data)
-                console.log(res.data);
-            } catch(err) {
-                console.log(err);
-            }
-        }
-        getData()
-    }, [])
+        setEmployees(data)
+    }, [data])
+
+    const renderEmployees = (arr) => {
+        return (
+            <div className="employee">
+                {arr?.map((item) => (
+                    <Employee key={item._id} {...item} />
+                ))}
+            </div>
+        )
+    }
+
+    const errorMessage = error ? <ErrorMsg error={error} /> : null
+    const spinner = isLoading && !employees ? <Spinner /> : null
+    const employeesData = renderEmployees(employees)
 
     return (
         <div className="body-container">
@@ -36,11 +47,9 @@ const Employees = () => {
                         <FaPlus style={{ color: '#fff' }} />
                     </div>
                 </div>
-                <div className="employee">
-                    {data.map((item) => (
-                        <Employee key={item._id} {...item} />
-                    ))}
-                </div>
+                {errorMessage}
+                {spinner}
+                {employeesData}
             </div>
         </div>
     )

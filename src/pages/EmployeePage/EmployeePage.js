@@ -1,39 +1,42 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import AppHeader from '../../components/AppHeader/AppHeader'
+import ErrorMsg from '../../components/ErrorMsg/ErrorMsg'
+import Spinner from '../../components/Spinner/Spinner'
+import useAxios from '../../hooks/useAxios'
 
-import './Employee.scss'
+import './EmployeePage.scss'
 
-const Employee = () => {
-    const [data, setData] = useState({})
+const EmployeePage = () => {
+    const [employee, setEmployee] = useState(null)
     const { id } = useParams()
 
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const res = await axios.get(
-                    'http://localhost:5000/api/employees/' + id
-                )
-                setData(res.data)
-                console.log(res.data)
-            } catch (error) {}
-        }
-        getData()
-    }, [id])
+    console.log(id)
+    console.log(employee)
 
-    return (
-        <>
-            <AppHeader />
+    const { data, error, isLoading } = useAxios(
+        'http://localhost:5000/api/employees/' + id
+    )
+
+    useEffect(() => {
+        setEmployee(data)
+    }, [data, id])
+
+    // console.log(employee)
+
+
+    const renderData = (item) => {
+        return (
             <div className="container">
                 <div className="wrapper">
                     <div className="left">
-                        <img src={data.img} alt={data.fullName} />
+                        <img src={item.img} alt={item.fullName} />
                         <div className="experience">
                             <h1 className="experience-title">
                                 Past experience
                             </h1>
-                            {data.experience?.map((item, i) => (
+                            {item.experience?.map((item, i) => (
                                 <div key={i} className="experience-item">
                                     <h3 className="experience-item__title">
                                         {item.title}
@@ -48,50 +51,63 @@ const Employee = () => {
                     <div className="right">
                         <div className="right-top">
                             <div className="right-top__userinfo">
-                                <h1>{data.fullName}</h1>
-                                <span>{data.position}</span>
+                                <h1>{item.fullName}</h1>
+                                <span>{item.position}</span>
                             </div>
                         </div>
                         <ul className="right-bottom">
                             <li className="right-bottom__title">General</li>
                             <li>
                                 <span>Birth Date</span>{' '}
-                                {data.birthdate?.slice(0, 10)}
+                                {item?.birthdate?.slice(0, 10)}
                             </li>
                             <li>
-                                <span>Gender</span> {data.gender}
+                                <span>Gender</span> {item.gender}
                             </li>
                             <li>
-                                <span>Department</span> {data.department}
+                                <span>Department</span> {item.department}
                             </li>
                             <li>
-                                <span>Salary</span> $ {data.salary}
+                                <span>Salary</span> $ {item.salary}
                             </li>
                         </ul>
                         <ul className="right-bottom">
                             <li className="right-bottom__title">Contact</li>
 
                             <li>
-                                <span>Phone</span> +{data.phone}
+                                <span>Phone</span> +{item.phone}
                             </li>
                             <li>
-                                <span>Adress</span> {data.adress}
+                                <span>Adress</span> {item.adress}
                             </li>
                             <li>
-                                <span>Email</span> {data.email}
+                                <span>Email</span> {item.email}
                             </li>
                         </ul>
                         <ul className="skills">
                             <li className="skills-title">Skills</li>
-                            {data.skills?.map((item, i) => (
+                            {item.skills?.map((item, i) => (
                                 <li key={i}>{item}</li>
                             ))}
                         </ul>
                     </div>
                 </div>
             </div>
+        )
+    }
+
+    const employeeInfo = employee ? renderData(employee) : null
+    const loading = isLoading && !employee ? <Spinner /> : null
+    const errorMsg = error ? <ErrorMsg error={error} /> : null
+
+    return (
+        <>
+            <AppHeader />
+            {employeeInfo}
+            {loading}
+            {errorMsg}
         </>
     )
 }
 
-export default Employee
+export default EmployeePage
