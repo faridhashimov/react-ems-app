@@ -1,4 +1,4 @@
-import './Page404.scssА'
+import './Page404.scss'
 
 const Page404 = () => {
   return (

@@ -37,7 +37,7 @@ const AppHeader = () => {
                         <div className="user">
                             <div className="user-image">
                                 <img
-                                    src="https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                                    src="https://expertphotography.b-cdn.net/wp-content/uploads/2020/08/social-media-profile-photos-3.jpg"
                                     alt="logged-user"
                                 />
                             </div>

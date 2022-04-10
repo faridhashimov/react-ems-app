@@ -1,19 +1,26 @@
-import './App.scss'
-import RegistrationPage from '../../pages/RegistrationPage/RegistrationPage'
-import LoginPage from '../../pages/LoginPage/LoginPage'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import HomePage from '../../pages/HomePage/HomePage'
-import EmployeePage from '../../pages/EmployeePage/EmployeePage'
 import { useContext } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import AuthContext from '../../context/authProvider'
 
+import {
+    EmployeePage,
+    RegistrationPage,
+    LoginPage,
+    HomePage,
+    Page404,
+    ProfilePage,
+} from '../../pages'
+
+import './App.scss'
+
 function App() {
-    const { auth } = useContext(AuthContext)
-    console.log(auth.user)
+    // const { auth } = useContext(AuthContext)
+    // console.log(auth.user)
 
     return (
         <Routes>
-            <Route
+            <Route path="user" element={<ProfilePage />} />
+            {/* <Route
                 path="/"
                 element={
                     auth.user ? (
@@ -43,7 +50,17 @@ function App() {
                     )
                 }
             />
-            <Route path="employee/:id" element={<EmployeePage />} />
+            <Route
+                path="employee/:id"
+                element={
+                    auth.user ? (
+                        <EmployeePage />
+                    ) : (
+                        <Navigate to="/login" replace={true} />
+                    )
+                }
+            />
+            <Route path="*" element={<Page404 />} /> */}
         </Routes>
     )
 }
