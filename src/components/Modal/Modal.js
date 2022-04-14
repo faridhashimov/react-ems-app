@@ -1,7 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import './Modal.scss'
 import { v4 as uuidv4 } from 'uuid'
+import {
+    getStorage,
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+} from 'firebase/storage'
+import app from '../../firebase'
 
 const Modal = ({ setAddEmployee }) => {
     const [experience, setExperience] = useState(false)
@@ -10,8 +17,10 @@ const Modal = ({ setAddEmployee }) => {
     const [inputs, setInputs] = useState({})
     const [file, setFile] = useState(null)
     const [skills, setSkills] = useState([])
+    const [expInputs, setExpInputs] = useState({})
+    const [expArray, setExpArray] = useState([])
 
-    const Exp = ({ i }) => {
+    const Exp = ({ i, onDeleteExp, handleExpInputs }) => {
         return (
             <div className="addExperience-modal__body_input">
                 <span data-id={i} onClick={onDeleteExp}>
@@ -19,18 +28,30 @@ const Modal = ({ setAddEmployee }) => {
                 </span>
                 <div className="addExperience-modal__body_input_element">
                     <label htmlFor="title">Company:</label>
-                    <input type="text" id="title" />
+                    <input
+                        onChange={handleExpInputs}
+                        name="title"
+                        type="text"
+                        id="title"
+                    />
                 </div>
                 <div className="addExperience-modal__body_input_element">
-                    <label htmlFor="info">Experience:</label>
-                    <textarea type="text" id="info" rows={6} />
+                    <label htmlFor="desc">Experience:</label>
+                    <textarea
+                        onChange={handleExpInputs}
+                        name="desc"
+                        type="text"
+                        id="desc"
+                        rows={6}
+                    />
                 </div>
             </div>
         )
     }
 
     const onAddNewExp = () => {
-        setAddExp((prev) => [...prev, <Exp i={uuidv4()} />])
+        setAddExp((prev) => [...prev, <Exp i={uuidv4()} handleExpInputs={handleExpInputs} onDeleteExp={onDeleteExp} />])
+        setExpArray((prev) => [...prev, expInputs])
     }
 
     const onDeleteExp = (e) => {
@@ -43,11 +64,70 @@ const Modal = ({ setAddEmployee }) => {
             return { ...prev, [e.target.name]: e.target.value }
         })
     }
-    
+
     const handleSkill = (e) => {
-        setSkills(e.target.value.split(","))
+        setSkills(e.target.value.split(','))
     }
-    console.log(skills);
+
+    const handleExpInputs = (e) => {
+        setExpInputs((prev) => {
+            return { ...prev, [e.target.name]: e.target.value }
+        })
+    }
+
+    const handleExpArray = (e) => {
+        e.preventDefault()
+        setExpArray((prev) => [...prev, expInputs])
+        setExperience(false)
+    }
+
+
+    // console.log(expInputs)
+    // console.log(expArray)
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        const fileName = new Date().getTime() + file.name
+        const storage = getStorage(app)
+        const storageRef = ref(storage, fileName)
+        const uploadTask = uploadBytesResumable(storageRef, file)
+
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                // Observe state change events such as progress, pause, and resume
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                console.log('Upload is ' + progress + '% done')
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused')
+                        break
+                    case 'running':
+                        console.log('Upload is running')
+                        break
+                    default:
+                }
+            },
+            (error) => {
+                // Handle unsuccessful uploads
+            },
+            () => {
+                // Handle successful uploads on complete
+                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log({ ...inputs, img: downloadURL, skills, experience: expArray })
+                })
+            }
+        )
+    }
+
+    // console.log(file)
 
     return (
         <div className="modalBackground">
@@ -109,7 +189,9 @@ const Modal = ({ setAddEmployee }) => {
                                     name="gender"
                                     id="gender"
                                 >
-                                    <option value="">--Please choose an option--</option>
+                                    <option value="">
+                                        --Please choose an option--
+                                    </option>
                                     <option value="male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
@@ -123,7 +205,9 @@ const Modal = ({ setAddEmployee }) => {
                                     name="department"
                                     id="department"
                                 >
-                                    <option value="">--Please choose an option--</option>
+                                    <option value="">
+                                        --Please choose an option--
+                                    </option>
                                     <option value="IT">IT</option>
                                     <option value="Web Development">
                                         Web Development
@@ -198,7 +282,7 @@ const Modal = ({ setAddEmployee }) => {
                                         setExperience(true)
                                         setAddExp((prev) => [
                                             ...prev,
-                                            <Exp i={uuidv4()} />,
+                                            <Exp i={uuidv4()} handleExpInputs={handleExpInputs} onDeleteExp={onDeleteExp}  />,
                                         ])
                                     }}
                                 >
@@ -210,7 +294,12 @@ const Modal = ({ setAddEmployee }) => {
                             {/* Image */}
                             <div className="modalForm-input">
                                 <label htmlFor="img">Image</label>
-                                <input type="file" alt="" id="img" />
+                                <input
+                                    type="file"
+                                    alt="image"
+                                    id="img"
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                />
                             </div>
                         </div>
 
@@ -241,13 +330,15 @@ const Modal = ({ setAddEmployee }) => {
                                         <span onClick={onAddNewExp}>
                                             Add New
                                         </span>
-                                        <span>Save</span>
+                                        <span onClick={handleExpArray}>Save</span>
                                     </div>
                                 </div>
                             </div>
                         ) : null}
 
-                        <button className="send">Save</button>
+                        <button onClick={handleClick} className="send">
+                            Save
+                        </button>
                     </form>
                 </div>
             </div>

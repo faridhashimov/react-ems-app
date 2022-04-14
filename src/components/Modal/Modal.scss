@@ -40,7 +40,7 @@
         }
 
         &-body {
-            width: 100%;
+            // width: 100%;
 
             form {
                 display: flex;
@@ -225,10 +225,12 @@
 
 
 
-@media (min-width: 500px) and (max-width: 1000px) {
+@media (min-width: 400px) and (max-width: 1000px) {
     .modalBackground {
 
         .modalContainer {
+        width: 65%;
+
 
             &-header {
                 // &__title {}
