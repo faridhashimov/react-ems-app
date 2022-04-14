@@ -9,6 +9,7 @@ import {
     getDownloadURL,
 } from 'firebase/storage'
 import app from '../../firebase'
+import axios from 'axios'
 
 const Modal = ({ setAddEmployee }) => {
     const [experience, setExperience] = useState(false)
@@ -121,7 +122,21 @@ const Modal = ({ setAddEmployee }) => {
                 // Handle successful uploads on complete
                 // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    console.log({ ...inputs, img: downloadURL, skills, experience: expArray })
+                    const employee = { ...inputs, img: downloadURL, skills, experience: expArray }
+
+                    const sendData = async () => {
+                        const response = await axios.post(
+                            'http://localhost:5000/api/employees',
+                            JSON.stringify(employee),
+                            {
+                                headers: { 'Content-Type': 'application/json' },
+                                // withCredentials: true,
+                            }
+                        )
+                        console.log(response.data)
+                    }
+                    sendData()
+
                 })
             }
         )
