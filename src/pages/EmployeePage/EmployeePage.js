@@ -23,14 +23,11 @@ const EmployeePage = () => {
         setEmployee(data)
     }, [data, id])
 
-    // console.log(employee)
-
-
     const renderData = (item) => {
         return (
-            <div className="container">
-                <div className="wrapper">
-                    <div className="left">
+            <div className="employeeContainer">
+                <div className="employeeWapper">
+                    <div className="employeeLeft">
                         <img src={item.img} alt={item.fullName} />
                         <div className="experience">
                             <h1 className="experience-title">
@@ -48,15 +45,15 @@ const EmployeePage = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="right">
-                        <div className="right-top">
-                            <div className="right-top__userinfo">
+                    <div className="employeeRight">
+                        <div className="employeeRight-top">
+                            <div className="employeeRight-top__userinfo">
                                 <h1>{item.fullName}</h1>
                                 <span>{item.position}</span>
                             </div>
                         </div>
-                        <ul className="right-bottom">
-                            <li className="right-bottom__title">General</li>
+                        <ul className="employeeRight-bottom">
+                            <li className="employeeRight-bottom__title">General</li>
                             <li>
                                 <span>Birth Date</span>{' '}
                                 {item?.birthdate?.slice(0, 10)}
@@ -71,8 +68,8 @@ const EmployeePage = () => {
                                 <span>Salary</span> $ {item.salary}
                             </li>
                         </ul>
-                        <ul className="right-bottom">
-                            <li className="right-bottom__title">Contact</li>
+                        <ul className="employeeRight-bottom">
+                            <li className="employeeRight-bottom__title">Contact</li>
 
                             <li>
                                 <span>Phone</span> +{item.phone}

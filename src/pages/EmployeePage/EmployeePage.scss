@@ -1,10 +1,10 @@
-.container {
+.employeeContainer {
     width: 100%;
     padding: 20px 0px;
     // height: calc(100vh - 80px);
     background-color: #CCD1EB;
 
-    .wrapper {
+    .employeeWapper {
         width: 90%;
         height: 100%;
         display: flex;
@@ -12,7 +12,7 @@
         align-items: flex-start;
         margin: 0 auto;
 
-        .left {
+        .employeeLeft {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -59,7 +59,7 @@
 
         }
 
-        .right {
+        .employeeRight {
             flex: 2;
             display: flex;
             flex-direction: column;

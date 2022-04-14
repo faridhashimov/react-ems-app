@@ -14,13 +14,12 @@ import {
 import './App.scss'
 
 function App() {
-    // const { auth } = useContext(AuthContext)
-    // console.log(auth.user)
+    const { auth } = useContext(AuthContext)
+    console.log(auth.user)
 
     return (
         <Routes>
-            <Route path="user" element={<ProfilePage />} />
-            {/* <Route
+            <Route
                 path="/"
                 element={
                     auth.user ? (
@@ -60,7 +59,17 @@ function App() {
                     )
                 }
             />
-            <Route path="*" element={<Page404 />} /> */}
+            <Route
+                path="user/*"
+                element={
+                    auth.user ? (
+                        <ProfilePage />
+                    ) : (
+                        <Navigate to="/login" replace={true} />
+                    )
+                }
+            />
+            <Route path="*" element={<Page404 />} />
         </Routes>
     )
 }

@@ -43,12 +43,9 @@ const AppHeader = () => {
                             </div>
                             <div className="user-info">
                                 <h1 className="user-info__name">{user}</h1>
-                                <a
-                                    href="google.ru"
-                                    className="user-info__profile"
-                                >
+                                <Link to="/user" className="user-info__profile">
                                     View Profile
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="icon-container">

@@ -18,8 +18,8 @@ const useAxios = (dataUrl) => {
                 })
                 if (isMounted) {
                     setData(response.data)
-                    console.log(response);
-                    console.log(response.data);
+                    // console.log(response);
+                    // console.log(response.data);
                     setError(null)
                 }
             } catch (err) {
