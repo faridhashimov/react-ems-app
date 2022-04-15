@@ -11,6 +11,7 @@ import Modal from '../Modal/Modal'
 const Employees = () => {
     const [employees, setEmployees] = useState(null)
     const [addEmployee, setAddEmployee] = useState(false)
+    const [term, setTerm] = useState('')
 
     const { data, error, isLoading } = useAxios(
         'http://localhost:5000/api/employees'
@@ -30,9 +31,20 @@ const Employees = () => {
         )
     }
 
+    console.log(employees)
+    const filterEmployees = (data, searchTerm) => {
+        if (searchTerm.length === 0) {
+            return data
+        }
+
+        return data.filter((item) => {
+            return item.fullName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+        })
+    }
+
     const errorMessage = error ? <ErrorMsg error={error} /> : null
     const spinner = isLoading && !employees ? <Spinner /> : null
-    const employeesData = renderEmployees(employees)
+    const employeesData = renderEmployees(filterEmployees(employees, term))
 
     return (
         <>
@@ -42,11 +54,15 @@ const Employees = () => {
                         <div className="employee-action__search">
                             <input
                                 type="text"
+                                onChange={(e) => setTerm(e.target.value)}
                                 placeholder="Enter search keyword..."
                             />
                             <FaSearch className="search-icon" />
                         </div>
-                        <div onClick={() => setAddEmployee(true)} className="employee-action__add">
+                        <div
+                            onClick={() => setAddEmployee(true)}
+                            className="employee-action__add"
+                        >
                             <FaPlus style={{ color: '#fff' }} />
                         </div>
                     </div>
